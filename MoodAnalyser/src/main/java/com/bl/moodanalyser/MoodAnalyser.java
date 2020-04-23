@@ -17,7 +17,6 @@ public class MoodAnalyser {
             this.message="HAPPY";
         else
             new MoodAnalyser();
-
     }
     //contains(): It is used to check string contain another substring or not.
     //This Method analyze the content of a string msg and return Happy or Sad.
