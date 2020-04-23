@@ -44,4 +44,11 @@ public class MoodAnalyserTest {
         moodAnalyser=new MoodAnalyser(message);
         Assert.assertEquals("Happy", moodAnalyser.analyseMood());
     }
+    //Test method to invoke constructor without any msg
+    @Test
+    public void invokeDefaultConstructor_ShouldReturnHappy()
+    {
+        moodAnalyser=new MoodAnalyser();
+        Assert.assertEquals("Happy", moodAnalyser.analyseMood());
+    }
 }
