@@ -13,6 +13,8 @@ public class MoodAnalyser {
     {
         if(message.contains("Sad"))
             this.message="SAD";
+        else if(message.contains("Happy"))
+            this.message="HAPPY";
         else
             new MoodAnalyser();
 

@@ -20,6 +20,14 @@ public class MoodAnalyserTest {
         moodAnalyser=new MoodAnalyser(message);
         Assert.assertEquals("SAD",moodAnalyser.analyseMood());
     }
+    //Test method with happy substring in the msg
+    @Test
+    public void givenString_ContainHappy_ShouldReturnHappy()
+    {
+        message = "I am in Happy Mood";
+        moodAnalyser=new MoodAnalyser(message);
+        Assert.assertEquals("HAPPY", moodAnalyser.analyseMood());
+    }
     //Test method with improper string
     @Test
     public void givenStringToConstructor_WhenImproper_ShouldReturnNull()
