@@ -16,9 +16,9 @@ public class MoodAnalyser {
     //Parametrized constructor with string and initialized message according
     public MoodAnalyser(String message)
     {
-        if(message == null){ // Check String is null/Empty or not
+        if(message == null) // Check String is null or not
             this.message=null;
-        }else if(message.contains("Sad")) // Check String with substring "SAD"
+        else if(message.contains("Sad")) // Check String with substring "SAD"
             this.message="SAD";
         else if(message.contains("Happy")) // Check String with substring "Happy"
             this.message="HAPPY";
