@@ -6,22 +6,35 @@ public class MoodAnalyser {
     //Default constructor
     public MoodAnalyser()
     {
-        this.message=null;
+        message=null;
     }
-    //contains(): It is used to check string contain another substring or not.	
+    /*
+    contains(): It is used to check string contain another substring or not.
+    isEmpty() : It is used to check string is Empty or not
+    */
+
     //Parametrized constructor with string and initialized message according
     public MoodAnalyser(String message)
     {
-        if(message.contains("Sad"))
+        if(message == null || message.isEmpty()){ // Check String is null/Empty or not
+            this.message=null;
+        }else if(message.contains("Sad")) // Check String with substring "SAD"
             this.message="SAD";
-        else if(message.contains("Happy"))
+        else if(message.contains("Happy")) // Check String with substring "Happy"
             this.message="HAPPY";
         else
-            this.message="Plz enter valid string msg.";
+            this.message="Plz enter the valid msg.";//Set Default msg if String is improper
     }
-    //This Method return message.
+    //This Method analyze the content of a string msg and return message.
     public String analyseMood()
     {
-        return this.message;
+        try{
+            if(message==null)
+                throw new NullPointerException();
+            return  message;
+        }
+        catch(NullPointerException e) {
+            return "Happy";
+        }
     }
 }

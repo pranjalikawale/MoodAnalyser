@@ -28,12 +28,20 @@ public class MoodAnalyserTest {
         moodAnalyser=new MoodAnalyser(message);
         Assert.assertEquals("HAPPY", moodAnalyser.analyseMood());
     }
-    //Test method with improper string
+    //Test method to invoke constructor with improper string
     @Test
-    public void givenStringToConstructor_WhenImproper_ShouldReturnNull()
+    public void givenStringToConstructor_WhenImproper_ShouldReturnMsg()
     {
         message = "I am in Fun Mood";
         moodAnalyser=new MoodAnalyser(message);
-        Assert.assertEquals("Plz enter valid string msg.", moodAnalyser.analyseMood());
+        Assert.assertEquals("Plz enter the valid msg.", moodAnalyser.analyseMood());
+    }
+    //Test method to invoke constructor with Null in string
+    @Test
+    public void givenNullToConstructor_ShouldReturnHappy()
+    {
+        message = null;
+        moodAnalyser=new MoodAnalyser(message);
+        Assert.assertEquals("Happy", moodAnalyser.analyseMood());
     }
 }
