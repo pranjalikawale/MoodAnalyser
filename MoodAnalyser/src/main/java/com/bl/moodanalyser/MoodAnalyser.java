@@ -1,16 +1,26 @@
 package com.bl.moodanalyser;
 //This class is used for Analyse Mood
 public class MoodAnalyser {
+    //Declare variable
+    private String message;
+    //Default constructor
+    public MoodAnalyser()
+    {
+        this.message=null;
+    }
+    //Parametrized constructor with string and initialized message according
+    public MoodAnalyser(String message)
+    {
+        if(message.contains("Sad"))
+            this.message="SAD";
+        else
+            new MoodAnalyser();
 
+    }
     //contains(): It is used to check string contain another substring or not.
     //This Method analyze the content of a string msg and return Happy or Sad.
-    public String analyseMood(String message)
+    public String analyseMood()
     {
-        if(message.contains("Happy"))
-            return "HAPPY";
-        else if(message.contains("Sad"))
-            return "SAD";
-        else
-            return "Plz enter the valid msg.";
+        return this.message;
     }
 }
