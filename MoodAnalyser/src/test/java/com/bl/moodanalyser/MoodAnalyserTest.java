@@ -34,8 +34,6 @@ public class MoodAnalyserTest {
     {
         message = "I am in Fun Mood";
         moodAnalyser=new MoodAnalyser(message);
-        Assert.assertEquals(null, moodAnalyser.analyseMood());
+        Assert.assertEquals("Plz enter valid string msg.", moodAnalyser.analyseMood());
     }
-
-
 }

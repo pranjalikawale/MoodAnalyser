@@ -8,6 +8,7 @@ public class MoodAnalyser {
     {
         this.message=null;
     }
+    //contains(): It is used to check string contain another substring or not.	
     //Parametrized constructor with string and initialized message according
     public MoodAnalyser(String message)
     {
@@ -16,10 +17,9 @@ public class MoodAnalyser {
         else if(message.contains("Happy"))
             this.message="HAPPY";
         else
-            new MoodAnalyser();
+            this.message="Plz enter valid string msg.";
     }
-    //contains(): It is used to check string contain another substring or not.
-    //This Method analyze the content of a string msg and return Happy or Sad.
+    //This Method return message.
     public String analyseMood()
     {
         return this.message;
