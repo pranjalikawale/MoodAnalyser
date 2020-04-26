@@ -1,4 +1,7 @@
 package com.bl.moodanalyser;
+
+import java.util.Objects;
+
 //This class is used for Analyse Mood
 public class MoodAnalyser {
         /*
@@ -12,12 +15,12 @@ public class MoodAnalyser {
     //Declare variable
     private String message;
     public enum ErrorType  {
-        NullError, EmptyError;
+        NullError, EmptyError, NoSuchClassError, NoSuchMethodError;
     }
     //Default constructor
     public MoodAnalyser() { }
 
-    //Parametrized constructor with stridng and initialized message according
+    //Parametrized constructor with string and initialized message according
     public MoodAnalyser(String message)
     {
         this.message=message;
@@ -48,5 +51,12 @@ public class MoodAnalyser {
         catch(MoodAnalysisException e) {
             return e.getMessage();
         }
+    }
+
+    public boolean equals(MoodAnalyser another) {
+            if (this.message == another.message) {
+                return true;
+            }
+            return false;
     }
 }

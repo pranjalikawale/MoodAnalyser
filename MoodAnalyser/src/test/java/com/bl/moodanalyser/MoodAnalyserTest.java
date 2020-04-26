@@ -1,7 +1,13 @@
 package com.bl.moodanalyser;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 
 //Test class for MoodAnalyser class
 public class MoodAnalyserTest {
@@ -77,6 +83,12 @@ public class MoodAnalyserTest {
     public void invokeDefaultConstructor_ShouldReturnNullError() throws MoodAnalysisException {
         moodAnalyser = new MoodAnalyser();
         Assert.assertEquals("NullError", moodAnalyser.analyseMood());
+    }
+    //Test method to check equality of object
+    @Test
+    public void givenMoodAnalyserClassToDefaultConstructor_ShouldReturnObject_CheckForEqualityOfObject() throws MoodAnalysisException {
+        MoodAnalyser moodAnalyserFactory= MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser");
+        Assert.assertEquals(true,new MoodAnalyser().equals(moodAnalyserFactory));
     }
 
 }
