@@ -122,11 +122,11 @@ public class MoodAnalyserTest {
     @Test
     public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowMethodNotFoundException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",Integer.class);
         }
         catch(Exception e)
         {
-            Assert.assertEquals("NoSuchClassError", e.getMessage());
+            Assert.assertEquals("NoSuchMethodError", e.getMessage());
         }
     }
 
