@@ -5,9 +5,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
-    public static MoodAnalyser createMoodAnalyser(String className) throws MoodAnalysisException {
+    public static MoodAnalyser createMoodAnalyser(String path) throws MoodAnalysisException {
         try {
-            Class<?> moodAnalyserClass = Class.forName(className);
+            Class<?> moodAnalyserClass = Class.forName(path);
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor();
             return (MoodAnalyser) moodConstructor.newInstance();
         } catch (InstantiationException e) {
@@ -66,8 +66,9 @@ public class MoodAnalyserFactory {
         }
         catch (NoSuchFieldException e ) {
             throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchFieldError);
-        }
-        catch (IllegalAccessException e)
+        }catch (NullPointerException e){
+            throw new MoodAnalysisException(MoodAnalyser.ErrorType.NullError);
+        } catch (IllegalAccessException e)
         {
             e.printStackTrace();
         }

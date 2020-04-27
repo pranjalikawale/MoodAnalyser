@@ -64,8 +64,7 @@ public class MoodAnalyserTest {
     @Test
     public void givenEmptyToConstructor_ShouldReturnEmptyError()
     {
-        message = "";
-        moodAnalyser=new MoodAnalyser(message);
+        moodAnalyser=new MoodAnalyser("");
         Assert.assertEquals("EmptyError", moodAnalyser.analyseMood());
     }
 
@@ -73,8 +72,7 @@ public class MoodAnalyserTest {
     @Test
     public void givenNullToConstructor_ShouldReturnNullError()
     {
-        message = null;
-        moodAnalyser=new MoodAnalyser(message);
+        moodAnalyser=new MoodAnalyser(null);
         Assert.assertEquals("NullError", moodAnalyser.analyseMood());
     }
 
@@ -132,14 +130,8 @@ public class MoodAnalyserTest {
     //Test method to invoke method when msg happy should return happy
     @Test
     public void givenHappyMessage_WhenProper_ShouldReturnHappyMood() throws MoodAnalysisException {
-        try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
             Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,"analyseMood"));
-        }
-        catch(MoodAnalysisException e)
-        {
-            e.printStackTrace();
-        }
     }
     //Test method for invoke wrong method should handle method not found exception
     @Test
@@ -156,26 +148,28 @@ public class MoodAnalyserTest {
     //Test method for set field
     @Test
     public void givenHappyMessage_SetField_ShouldReturnHappy() throws MoodAnalysisException {
-        try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Sad mood",String.class);
             Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message","I am in a Happy mood"),"analyseMood"));
-        }
-        catch(MoodAnalysisException e)
-        {
-            e.getMessage();
-        }
     }
     //Test method for set invalid field and handle exception
     @Test
     public void givenHappyMessage_SetField_WhenImproper_ShouldHandleFieldNotFoundException() throws MoodAnalysisException {
         try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Sad mood",String.class);
-            Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message1","I am in a Happy mood"),"analyseMood"));
+            MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message1","I am in a Happy mood"),"analyseMood");
         }
-        catch(MoodAnalysisException e)
-        {
+        catch(MoodAnalysisException e) {
             Assert.assertEquals("NoSuchFieldError", e.getMessage());
         }
-
+    }
+    //Test method for set invalid field and handle exception
+    @Test
+    public void givenNullMessage_SetField_WhenImproper_ShouldHandleNullException() throws MoodAnalysisException {
+        try {
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser", "I am in a Sad mood", String.class);
+            MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message",null),"analyseMood");
+        }catch(MoodAnalysisException e) {
+            Assert.assertEquals("NullError", e.getMessage());
+        }
     }
 }
