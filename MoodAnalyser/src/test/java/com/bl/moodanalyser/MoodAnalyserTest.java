@@ -138,11 +138,11 @@ public class MoodAnalyserTest {
     public void givenHappyMessage_WhenMethodImproper_ShouldShouldThrowMethodNotFoundException() throws MoodAnalysisException {
         try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
-            Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,"analyseMood1"));
+            MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,"analyseMood1");
         }
         catch(MoodAnalysisException e)
         {
-            e.printStackTrace();
+            Assert.assertEquals("NoSuchMethodError",e.getMessage());
         }
     }
     //Test method for set field
