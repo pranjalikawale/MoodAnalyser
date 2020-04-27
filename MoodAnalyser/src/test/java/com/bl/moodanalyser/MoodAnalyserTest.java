@@ -107,6 +107,16 @@ public class MoodAnalyserTest {
         MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood");
         Assert.assertEquals(true,new MoodAnalyser("I am in a Happy mood").equals(moodAnalyserFactory));
     }
-    
+    //Test method to handle class not found using parameterize
+    @Test
+    public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowClassNotFoundException() throws MoodAnalysisException {
+        try {
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12","I am in a Happy mood");
+        }
+        catch(Exception e)
+        {
+            Assert.assertEquals("NoSuchClassError", e.getMessage());
+        }
+    }
     
 }
