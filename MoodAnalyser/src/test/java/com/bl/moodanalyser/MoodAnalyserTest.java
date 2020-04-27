@@ -96,7 +96,7 @@ public class MoodAnalyserTest {
         try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12");
         }
-        catch(Exception e)
+        catch(MoodAnalysisException e)
         {
             Assert.assertEquals("NoSuchClassError", e.getMessage());
         }
@@ -113,7 +113,7 @@ public class MoodAnalyserTest {
         try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12","I am in a Happy mood",String.class);
         }
-        catch(Exception e)
+        catch(MoodAnalysisException e)
         {
             Assert.assertEquals("NoSuchClassError", e.getMessage());
         }
@@ -124,10 +124,22 @@ public class MoodAnalyserTest {
         try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",Integer.class);
         }
-        catch(Exception e)
+        catch(MoodAnalysisException e)
         {
             Assert.assertEquals("NoSuchMethodError", e.getMessage());
         }
     }
 
+    //Test method to handle class not found using parameterize
+    @Test
+    public void givenHappyMessage_WhenProper_ShouldReturnHappyMood() throws MoodAnalysisException {
+        try {
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
+            Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,"analyseMood"));
+        }
+        catch(MoodAnalysisException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
