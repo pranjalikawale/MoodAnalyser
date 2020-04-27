@@ -104,19 +104,30 @@ public class MoodAnalyserTest {
     //Test method to check equality of object using parameterized
     @Test
     public void givenMoodAnalyserClassToParameterizeConstructor_ShouldReturnObject_CheckForEqualityOfObject() throws MoodAnalysisException {
-        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood");
+        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
         Assert.assertEquals(true,new MoodAnalyser("I am in a Happy mood").equals(moodAnalyserFactory));
     }
     //Test method to handle class not found using parameterize
     @Test
     public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowClassNotFoundException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12","I am in a Happy mood");
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12","I am in a Happy mood",String.class);
         }
         catch(Exception e)
         {
             Assert.assertEquals("NoSuchClassError", e.getMessage());
         }
     }
-    
+    //Test method to handle class not found using parameterize
+    @Test
+    public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowMethodNotFoundException() throws MoodAnalysisException {
+        try {
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
+        }
+        catch(Exception e)
+        {
+            Assert.assertEquals("NoSuchClassError", e.getMessage());
+        }
+    }
+
 }

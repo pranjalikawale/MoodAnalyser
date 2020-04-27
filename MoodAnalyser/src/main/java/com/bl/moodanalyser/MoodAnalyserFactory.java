@@ -22,10 +22,10 @@ public static MoodAnalyser createMoodAnalyser(String className) throws MoodAnaly
     }
     return null;
 }
-public static MoodAnalyser createMoodAnalyser(String className,String message) throws MoodAnalysisException {
+public static MoodAnalyser createMoodAnalyser(String path,String message,Class className) throws MoodAnalysisException {
         try{
-            Class<?> moodAnalyserClass=Class.forName(className);
-            Constructor<?> moodConstructor=moodAnalyserClass.getConstructor(String.class);
+            Class<?> moodAnalyserClass=Class.forName(path);
+            Constructor<?> moodConstructor=moodAnalyserClass.getConstructor(className);
             return (MoodAnalyser) moodConstructor.newInstance(message);
         } catch (InstantiationException e) {
             e.printStackTrace();
