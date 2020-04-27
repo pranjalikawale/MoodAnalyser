@@ -103,14 +103,10 @@ public class MoodAnalyserTest {
     }
     //Test method to check equality of object using parameterized
     @Test
-    public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowClassNotFoundException() throws MoodAnalysisException {
-        try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12","I am in a Happy mood");
-        }
-        catch(Exception e)
-        {
-            Assert.assertEquals("NoSuchClassError", e.getMessage());
-        }
+    public void givenMoodAnalyserClassToParameterizeConstructor_ShouldReturnObject_CheckForEqualityOfObject() throws MoodAnalysisException {
+        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood");
+        Assert.assertEquals(true,new MoodAnalyser("I am in a Happy mood").equals(moodAnalyserFactory));
     }
+    
     
 }
