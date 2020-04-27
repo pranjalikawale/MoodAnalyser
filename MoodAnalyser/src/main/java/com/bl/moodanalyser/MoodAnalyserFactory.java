@@ -5,9 +5,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
+    public static Class getClassPath(String path) throws ClassNotFoundException {
+        return Class.forName(path);
+    }
     public static MoodAnalyser createMoodAnalyser(String path) throws MoodAnalysisException {
         try {
-            Class<?> moodAnalyserClass = Class.forName(path);
+            Class<?> moodAnalyserClass = getClassPath(path);
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor();
             return (MoodAnalyser) moodConstructor.newInstance();
         } catch (InstantiationException e) {
@@ -26,7 +29,7 @@ public class MoodAnalyserFactory {
 
     public static MoodAnalyser createMoodAnalyser(String path, String message, Class className) throws MoodAnalysisException {
         try {
-            Class<?> moodAnalyserClass = Class.forName(path);
+            Class<?> moodAnalyserClass = getClassPath(path);
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(className);
             return (MoodAnalyser) moodConstructor.newInstance(message);
         } catch (InstantiationException e) {
@@ -58,7 +61,6 @@ public class MoodAnalyserFactory {
 
     public static Object setFieldDynamically(MoodAnalyser moodAnalyserFactoryObj,String fieldName,String mood) throws MoodAnalysisException {
         try{
-
             Field field=moodAnalyserFactoryObj.getClass().getField(fieldName);
             field.setAccessible(true);
             field.set(moodAnalyserFactoryObj,mood);
