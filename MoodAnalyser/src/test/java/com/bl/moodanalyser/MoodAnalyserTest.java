@@ -129,7 +129,6 @@ public class MoodAnalyserTest {
             Assert.assertEquals("NoSuchMethodError", e.getMessage());
         }
     }
-
     //Test method to invoke method when msg happy should return happy
     @Test
     public void givenHappyMessage_WhenProper_ShouldReturnHappyMood() throws MoodAnalysisException {
@@ -142,7 +141,6 @@ public class MoodAnalyserTest {
             e.printStackTrace();
         }
     }
-
     //Test method for invoke wrong method should handle method not found exception
     @Test
     public void givenHappyMessage_WhenMethodImproper_ShouldShouldThrowMethodNotFoundException() throws MoodAnalysisException {
@@ -154,5 +152,18 @@ public class MoodAnalyserTest {
         {
             e.printStackTrace();
         }
+    }
+    //Test method for invoke wrong method should handle method not found exception
+    @Test
+    public void givenHappyMessage_SetField_ShouldReturnHappy() throws MoodAnalysisException {
+        try {
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Sad mood",String.class);
+            Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message","I am in a Happy mood"),"analyseMood"));
+        }
+        catch(MoodAnalysisException e)
+        {
+            e.getMessage();
+        }
+
     }
 }

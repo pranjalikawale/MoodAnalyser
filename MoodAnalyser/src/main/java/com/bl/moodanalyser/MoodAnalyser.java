@@ -13,9 +13,9 @@ public class MoodAnalyser {
     */
 
     //Declare variable
-    private String message;
+    public String message;
     public enum ErrorType  {
-        NullError, EmptyError, NoSuchClassError, NoSuchMethodError;
+        NullError, EmptyError, NoSuchClassError, NoSuchMethodError,NoSuchFieldError;
     }
     //Default constructor
     public MoodAnalyser() { }
