@@ -52,11 +52,11 @@ public class MoodAnalyser {
             return e.getMessage();
         }
     }
-
-    public boolean equals(MoodAnalyser another) {
-            if (this.message == another.message) {
-                return true;
-            }
-            return false;
+    @Override
+    public boolean equals(Object another) {
+        if (this.message == ((MoodAnalyser) another).message)
+            return true;
+        return false;
     }
+
 }

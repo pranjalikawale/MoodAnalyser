@@ -5,76 +5,66 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
+    //return class path
     public static Class getClassPath(String path) throws ClassNotFoundException {
         return Class.forName(path);
     }
-    public static MoodAnalyser createMoodAnalyser(String path) throws MoodAnalysisException {
+    //return object
+   public static MoodAnalyser createMoodAnalyser(String path) throws MoodAnalysisException {
+       MoodAnalyser object=null;
         try {
             Class<?> moodAnalyserClass = getClassPath(path);
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor();
-            return (MoodAnalyser) moodConstructor.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+            object = (MoodAnalyser) moodConstructor.newInstance();
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException  e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchMethodError);
         } catch (ClassNotFoundException e) {
             throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchClassError);
         }
-        return null;
+        return object;
     }
-
+    //return object by invoking parameterized constructor
     public static MoodAnalyser createMoodAnalyser(String path, String message, Class className) throws MoodAnalysisException {
+        MoodAnalyser object=null;
         try {
             Class<?> moodAnalyserClass = getClassPath(path);
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(className);
-            return (MoodAnalyser) moodConstructor.newInstance(message);
-        } catch (InstantiationException e) {
+            object = (MoodAnalyser) moodConstructor.newInstance(message);
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        }catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchMethodError);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchClassError);
         }
-        return null;
+        return object;
     }
-
+    // invoke moodAnalyse method
     public static Object invokeMethod(MoodAnalyser moodAnalyserFactoryObj, String method) throws MoodAnalysisException {
+        Object object=null;
         try {
-            return moodAnalyserFactoryObj.getClass().getMethod(method).invoke(moodAnalyserFactoryObj);
+            object = moodAnalyserFactoryObj.getClass().getMethod(method).invoke(moodAnalyserFactoryObj);
         } catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchMethodError);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
-    return null;
+    return object;
     }
-
-    public static Object setFieldDynamically(MoodAnalyser moodAnalyserFactoryObj,String fieldName,String mood) throws MoodAnalysisException {
+    // set field
+    public static MoodAnalyser setFieldDynamically(MoodAnalyser moodAnalyserFactoryObj,String fieldName,String mood) throws MoodAnalysisException {
         try{
             Field field=moodAnalyserFactoryObj.getClass().getField(fieldName);
-            field.setAccessible(true);
             field.set(moodAnalyserFactoryObj,mood);
-            return moodAnalyserFactoryObj;
         }
         catch (NoSuchFieldException e ) {
             throw new MoodAnalysisException(MoodAnalyser.ErrorType.NoSuchFieldError);
-        }catch (NullPointerException e){
-            throw new MoodAnalysisException(MoodAnalyser.ErrorType.NullError);
-        } catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e){
             e.printStackTrace();
         }
-        return null;
+        return moodAnalyserFactoryObj;
     }
 
 }

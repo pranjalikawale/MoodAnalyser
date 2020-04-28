@@ -11,26 +11,31 @@ import java.lang.reflect.InvocationTargetException;
 
 //Test class for MoodAnalyser class
 public class MoodAnalyserTest {
-
     //declare object/variable
     private MoodAnalyser moodAnalyser;
     private String message;
+    private String mood="I am in a happy mood";
+    private String methodName="analyseMood";
+    private static final String path="com.bl.moodanalyser.MoodAnalyser";
+
+    //@Before execute before all test method
+    @Before
+    public void initialize() {
+        moodAnalyser=new MoodAnalyser();
+    }
 
     //@Test :It indicate this is a test method.
     //Test method with sad substring in the msg
     @Test
     public void givenMoodToMethod_ContainSad_ShouldReturnSad() throws MoodAnalysisException {
         message="I am in Sad Mood";
-        moodAnalyser=new MoodAnalyser();
         Assert.assertEquals("SAD",moodAnalyser.analyseMood(message));
     }
 
     //Test method with happy substring in the msg
     @Test
     public void givenMoodToMethod_ContainHappy_ShouldReturnHappy() throws MoodAnalysisException {
-        message = "I am in Happy Mood";
-        moodAnalyser=new MoodAnalyser();
-        Assert.assertEquals("HAPPY", moodAnalyser.analyseMood(message));
+        Assert.assertEquals("HAPPY", moodAnalyser.analyseMood(mood));
     }
 
     //Test method with sad substring in the msg
@@ -46,8 +51,7 @@ public class MoodAnalyserTest {
     @Test
     public void givenMood_ContainHappy_ShouldReturnHappy()
     {
-        message = "I am in Happy Mood";
-        moodAnalyser=new MoodAnalyser(message);
+        moodAnalyser=new MoodAnalyser(mood);
         Assert.assertEquals("HAPPY", moodAnalyser.analyseMood());
     }
 
@@ -79,65 +83,69 @@ public class MoodAnalyserTest {
     //Test method to invoke default constructor without any msg
     @Test
     public void invokeDefaultConstructor_ShouldReturnNullError() throws MoodAnalysisException {
-        moodAnalyser = new MoodAnalyser();
+        //moodAnalyser = new MoodAnalyser();
         Assert.assertEquals("NullError", moodAnalyser.analyseMood());
     }
+
     //Test method to check equality of object
     @Test
-    public void givenMoodAnalyserClassToDefaultConstructor_ShouldReturnObject_ThenCheckForEqualityOfObject() throws MoodAnalysisException {
-        MoodAnalyser moodAnalyserFactory= MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser");
+    public void givenMoodAnalyserClassToDefaultConstructor_ShouldReturnObject_ThenCheckForEqualityOfObject()throws MoodAnalysisException  {
+        MoodAnalyser moodAnalyserFactory= MoodAnalyserFactory.createMoodAnalyser(path);
         Assert.assertEquals(true,new MoodAnalyser().equals(moodAnalyserFactory));
     }
+
     //Test for handle class not found exception
     @Test
     public void givenMoodAnalyserClassToDefaultConstructor_WhenImproper_ShouldThrowClassNotFoundException() throws MoodAnalysisException {
         try {
             MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12");
         }
-        catch(MoodAnalysisException e)
-        {
+        catch(MoodAnalysisException e) {
             Assert.assertEquals("NoSuchClassError", e.getMessage());
         }
     }
+
     //Test method to check equality of object using parameterized
     @Test
-    public void givenMoodAnalyserClassToParameterizeConstructor_ShouldReturnObject_CheckForEqualityOfObject() throws MoodAnalysisException {
-        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
-        Assert.assertEquals(true,new MoodAnalyser("I am in a Happy mood").equals(moodAnalyserFactory));
+    public void givenMoodAnalyserClassToParameterizeConstructor_ShouldReturnObject_ThenCheckForEqualityOfObject() throws MoodAnalysisException {
+        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path,mood,String.class);
+        Assert.assertEquals(true,new MoodAnalyser(mood).equals(moodAnalyserFactory));
     }
+
     //Test method to handle class not found using parameterize
     @Test
     public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowClassNotFoundException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12","I am in a Happy mood",String.class);
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser12",mood,String.class);
         }
-        catch(MoodAnalysisException e)
-        {
+        catch(MoodAnalysisException e) {
             Assert.assertEquals("NoSuchClassError", e.getMessage());
         }
     }
+
     //Test method to handle class not found using parameterize
     @Test
     public void givenMoodAnalyserClassToParameterizeConstructor_WhenImproper_ShouldThrowMethodNotFoundException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",Integer.class);
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path,mood,Integer.class);
         }
-        catch(MoodAnalysisException e)
-        {
+        catch(MoodAnalysisException e) {
             Assert.assertEquals("NoSuchMethodError", e.getMessage());
         }
     }
+
     //Test method to invoke method when msg happy should return happy
     @Test
-    public void givenHappyMessage_WhenProper_ShouldReturnHappyMood() throws MoodAnalysisException {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
-            Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,"analyseMood"));
+    public void givenHappyMessage_WhenMethodProper_ShouldReturnHappyMood() throws MoodAnalysisException {
+        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path,mood,String.class);
+        Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,methodName));
     }
+
     //Test method for invoke wrong method should handle method not found exception
     @Test
     public void givenHappyMessage_WhenMethodImproper_ShouldShouldThrowMethodNotFoundException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Happy mood",String.class);
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path,mood,String.class);
             MoodAnalyserFactory.invokeMethod(moodAnalyserFactory,"analyseMood1");
         }
         catch(MoodAnalysisException e)
@@ -145,29 +153,32 @@ public class MoodAnalyserTest {
             Assert.assertEquals("NoSuchMethodError",e.getMessage());
         }
     }
+
     //Test method for set field
     @Test
-    public void givenHappyMessage_SetField_ShouldReturnHappy() throws MoodAnalysisException {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Sad mood",String.class);
-            Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message","I am in a Happy mood"),"analyseMood"));
+    public void givenHappyMessage_SetField_WhenProper_ShouldReturnHappy() throws MoodAnalysisException {
+        MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path,"I am in a Sad mood",String.class);
+        Assert.assertEquals("HAPPY",MoodAnalyserFactory.invokeMethod(MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message",mood),methodName));
     }
+
     //Test method for set invalid field and handle exception
     @Test
     public void givenHappyMessage_SetField_WhenImproper_ShouldHandleFieldNotFoundException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser","I am in a Sad mood",String.class);
-            MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message1","I am in a Happy mood"),"analyseMood");
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path,"I am in a Sad mood",String.class);
+            MoodAnalyserFactory.invokeMethod(MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message1",mood),methodName);
         }
         catch(MoodAnalysisException e) {
             Assert.assertEquals("NoSuchFieldError", e.getMessage());
         }
     }
+
     //Test method for set invalid field and handle exception
     @Test
     public void givenNullMessage_SetField_WhenImproper_ShouldHandleNullException() throws MoodAnalysisException {
         try {
-            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser("com.bl.moodanalyser.MoodAnalyser", "I am in a Sad mood", String.class);
-            MoodAnalyserFactory.invokeMethod((MoodAnalyser)MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message",null),"analyseMood");
+            MoodAnalyser moodAnalyserFactory = MoodAnalyserFactory.createMoodAnalyser(path, mood, String.class);
+            MoodAnalyserFactory.invokeMethod(MoodAnalyserFactory.setFieldDynamically(moodAnalyserFactory,"message",null),methodName);
         }catch(MoodAnalysisException e) {
             Assert.assertEquals("NullError", e.getMessage());
         }
